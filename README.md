@@ -13,6 +13,12 @@ Dataset - https://drive.google.com/file/d/19ZsPaQAAKVKKXgswXRl534YoSYCqWkbw/view
 - Libraries: Pandas, NumPy, Scikit-learn, Matplotlib, Seaborn
 - Environment: Jupyter Notebook / Google Colab
 
+## Demo
+
+Terminal recording of the real fixed pipeline running on the real 100k-transaction dataset, including the before/after leakage comparison:
+
+![Terminal recording of the fixed evaluation](docs/demo.gif)
+
 ## Evaluation
 
 **A real bug found and fixed:** the original notebook trained the RandomForestRegressor with `model.fit(X, y)` and then evaluated it with `model.predict(X)` — the same data twice. Any reported metric from that is meaningless; a model that has already seen every row it's "tested" on will always look artificially strong. `build_and_eval.py` reproduces the exact same pipeline on the real 100,000-transaction Aave V2 dataset (3,497 unique wallets), fixed with a proper 80/20 train/test split:
